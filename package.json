@@ -1,0 +1,34 @@
+{
+  "name": "epytodo",
+  "version": "1.0.0",
+  "description": "Epitech B-WEB-200 EpyTodo project",
+  "keywords": [
+    "epytodo",
+    "epitech",
+    "B-WEB-200"
+  ],
+  "homepage": "https://github.com/Savapitech/epytodo#readme",
+  "bugs": {
+    "url": "https://github.com/Savapitech/epytodo/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Savapitech/epytodo.git"
+  },
+  "license": "ISC",
+  "author": "savalet eiffis Arthur-gtr",
+  "type": "commonjs",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^2.2.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.14.1"
+  }
+}
