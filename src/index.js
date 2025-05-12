@@ -1,10 +1,24 @@
-const express = require('express')
-require('dotenv').config()
+require('dotenv').config();
+const express = require('express');
+const app = express();
 
-const app = express()
-const version = require('../package.json').version
+const notFound = require('./middleware/notFound');
+const authRoutes = require('./routes/auth');
+// const userRoutes = require('./routes/user/user');
+// const todoRoutes = require('./routes/todos/todos');
 
-console.log(`\x1b[0;36m EpyTodo API | v${version}\x1b[0;37m`)
+// Global middleware
+app.use(express.json());
 
-app.listen(process.env.PORT)
-console.log(`The API is listening on port ${process.env.PORT}`)
+// Routes
+app.use('/', authRoutes);
+// app.use('/user', userRoutes);
+// app.use('/todos', todoRoutes);
+
+// 404 middleware
+app.use(notFound);
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`The API is listening on port ${PORT}`)
+});
