@@ -5,7 +5,8 @@ const app = express();
 const notFound = require('./middleware/notFound');
 const logger = require('./middleware/logger');
 const authRoutes = require('./routes/auth');
-const userRoutes = require('./routes/user/user');
+const userRoutes = require('./routes/user');
+const usersRoutes = require('./routes/users/users');
 // const todoRoutes = require('./routes/todos/todos');
 
 // Global middleware
@@ -16,6 +17,7 @@ app.use(logger);
 // Routes
 app.use('/', authRoutes);
 app.use('/user', userRoutes);
+app.use('/users/:data', usersRoutes);
 // app.use('/todos', todoRoutes);
 
 // 404 middleware
