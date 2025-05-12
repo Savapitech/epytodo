@@ -22,4 +22,23 @@ router.get('/', auth, async (req, res) => {
     }
 });
 
+router.delete('/', auth, async (req, res) => {
+    const id = req.params.data
+
+    try {
+        const [rows] = await pool.query(
+            'DELETE FROM user WHERE id = ?',
+            [id]
+        );
+
+        if (rows.length < 1)
+            return res.status(404).json({ msg: 'User not found' });
+
+        res.json({ msg: `Successfully deleted record number : ${id}` });
+    } catch (err) {
+        console.error('Database error:', err);
+        res.status(500).json({ msg: 'Internal server error' });
+    }
+});
+
 module.exports = router;
