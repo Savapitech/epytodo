@@ -35,25 +35,25 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
+    if (!req.body)
+        return res.status(400).json({ msg: 'Bad parameter' });
+
     const { email, password } = req.body;
 
-    if (!email || !password) {
+    if (!email || !password)
         return res.status(400).json({ msg: 'Bad parameter' });
-    }
 
     try {
         const [rows] = await pool.query('SELECT * FROM user WHERE email = ?', [email]);
 
-        if (rows.length === 0) {
+        if (rows.length === 0)
             return res.status(401).json({ msg: 'Invalid Credentials' });
-        }
 
         const user = rows[0];
         const isMatch = await bcrypt.compare(password, user.password);
 
-        if (!isMatch) {
+        if (!isMatch)
             return res.status(401).json({ msg: 'Invalid Credentials' });
-        }
 
         const token = jwt.sign({ id: user.id }, process.env.SECRET, { expiresIn: '1h' });
         res.json({ token });
