@@ -16,6 +16,7 @@
         hardeningDisable = ["fortify"];
         packages = with pkgs; [
           nodejs_24
+          insomnia
         ];
       };
     });
