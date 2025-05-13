@@ -61,7 +61,7 @@ CREATE TABLE `user` (
 --
 ALTER TABLE `todo`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_user` (`user_id`);
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Index pour la table `user`
@@ -94,7 +94,7 @@ ALTER TABLE `user`
 -- Contraintes pour la table `todo`
 --
 ALTER TABLE `todo`
-  ADD CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
