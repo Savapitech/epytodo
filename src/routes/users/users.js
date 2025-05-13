@@ -14,7 +14,7 @@ router.get('/', auth, async (req, res) => {
         );
 
         if (rows.length < 1)
-            return res.status(404).json({ msg: 'User not found' });
+            return res.status(404).json({ msg: 'Not found' });
 
         res.json(rows[0]);
     } catch (err) {
@@ -38,7 +38,7 @@ router.put('/', auth, async (req, res) => {
         );
 
         if (rows.length < 1)
-            return res.status(404).json({ msg: 'User not found' });
+            return res.status(404).json({ msg: 'Not found' });
         const hashedPassword = await bcrypt.hash(password, 10)
         rows = await pool.query(
             'UPDATE user SET email = ?, password = ?, firstname = ?, name = ? WHERE id = ?',
@@ -46,7 +46,7 @@ router.put('/', auth, async (req, res) => {
         );
 
         if (rows.length < 1)
-            return res.status(404).json({ msg: 'User not found' });
+            return res.status(404).json({ msg: 'Not found' });
 
         rows = await pool.query(
             'SELECT id, email, password, created_at, firstname, name FROM user WHERE id = ?',
@@ -54,7 +54,7 @@ router.put('/', auth, async (req, res) => {
         );
 
         if (rows.length < 1)
-            return res.status(404).json({ msg: 'User not found' });
+            return res.status(404).json({ msg: 'Not found' });
         res.json(rows[0]);
     } catch (err) {
         console.error('Database error:', err);
@@ -72,7 +72,7 @@ router.delete('/', auth, async (req, res) => {
         );
 
         if (rows.length < 1)
-            return res.status(404).json({ msg: 'User not found' });
+            return res.status(404).json({ msg: 'Not found' });
 
         res.json({ msg: `Successfully deleted record number : ${id}` });
     } catch (err) {

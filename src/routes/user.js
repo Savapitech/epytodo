@@ -11,7 +11,7 @@ router.get('/', auth, async (req, res) => {
         );
 
         if (rows.length < 1)
-            return res.status(404).json({ msg: 'User not found' });
+            return res.status(404).json({ msg: 'Not found' });
 
         res.json(rows[0]);
     } catch (err) {
