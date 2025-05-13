@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
+const bcrypt = require('bcryptjs');
 const pool = require('../../config/db');
 const auth = require('../../middleware/auth');
 
@@ -15,6 +16,45 @@ router.get('/', auth, async (req, res) => {
         if (rows.length < 1)
             return res.status(404).json({ msg: 'User not found' });
 
+        res.json(rows[0]);
+    } catch (err) {
+        console.error('Database error:', err);
+        res.status(500).json({ msg: 'Internal server error' });
+    }
+});
+
+router.put('/', auth, async (req, res) => {
+    if (!req.body)
+        return res.status(400).json({ msg: 'Bad parameter' });
+    const { email, password, firstname, name } = req.body;
+    if (!email || !password || !firstname || !name)
+        return res.status(400).json({ msg: 'Bad parameter' });
+    const id = req.params.data;
+
+    try {
+        let [rows] = await pool.query(
+            'SELECT id, email, password, created_at, firstname, name FROM user WHERE id = ?',
+            [id]
+        );
+
+        if (rows.length < 1)
+            return res.status(404).json({ msg: 'User not found' });
+        const hashedPassword = await bcrypt.hash(password, 10)
+        rows = await pool.query(
+            'UPDATE user SET email = ?, password = ?, firstname = ?, name = ? WHERE id = ?',
+            [email, hashedPassword, firstname, name, id]
+        );
+
+        if (rows.length < 1)
+            return res.status(404).json({ msg: 'User not found' });
+
+        rows = await pool.query(
+            'SELECT id, email, password, created_at, firstname, name FROM user WHERE id = ?',
+            [id]
+        );
+
+        if (rows.length < 1)
+            return res.status(404).json({ msg: 'User not found' });
         res.json(rows[0]);
     } catch (err) {
         console.error('Database error:', err);
