@@ -28,7 +28,7 @@ router.get('/todos', auth, async (req, res) => {
         if (rows.length < 1)
             return res.status(404).json({ msg: 'Not found' });
 
-        res.json(rows[0]);
+        res.json(rows);
     } catch (err) {
         console.error('Database error:', err);
         res.status(500).json({ msg: 'Internal server error' });
