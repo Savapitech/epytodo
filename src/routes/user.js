@@ -23,7 +23,7 @@ router.get('/', auth, async (req, res) => {
 
 router.get('/todos', auth, async (req, res) => {
     try {
-        const [rows] = await pool.query("SELECT *, DATE_FORMAT(CONVERT_TZ(due_time, '+00:00', '+00:00'), '%Y-%m-%d %H:%i:%s') AS due_time, DATE_FORMAT(CONVERT_TZ(created_at, '+00:00', '+00:00'), '%Y-%m-%d %H:%i:%s') AS created_at FROM todo WHERE user_id = ?", [req.user.id]);
+        const [rows] = await pool.query("SELECT id, title, description, DATE_FORMAT(CONVERT_TZ(due_time, '+00:00', '+00:00'), '%Y-%m-%d %H:%i:%s') AS due_time, DATE_FORMAT(CONVERT_TZ(created_at, '+00:00', '+00:00'), '%Y-%m-%d %H:%i:%s') AS created_at, user_id, status FROM todo WHERE user_id = ?", [req.user.id]);
 
         if (rows.length < 1)
             return res.status(404).json({ msg: 'Not found' });
