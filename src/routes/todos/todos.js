@@ -5,7 +5,7 @@ const auth = require('../../middleware/auth');
 
 router.get('/', auth, async (req, res) => {
     try {
-        const [todos] = await pool.query('SELECT * FROM todo');
+        const [todos] = await pool.query("SELECT *, DATE_FORMAT(CONVERT_TZ(due_time, '+00:00', '+00:00'), '%Y-%m-%d %H:%i:%s') AS due_time, DATE_FORMAT(CONVERT_TZ(created_at, '+00:00', '+00:00'), '%Y-%m-%d %H:%i:%s') AS created_at FROM todo");
         res.json(todos);
     } catch (err) {
         console.error(err);
@@ -17,11 +17,10 @@ router.get('/:id', auth, async (req, res) => {
     const { id } = req.params;
 
     try {
-        const [rows] = await pool.query('SELECT * FROM todo WHERE id = ?', [id]);
+        const [rows] = await pool.query("SELECT *, DATE_FORMAT(CONVERT_TZ(due_time, '+00:00', '+00:00'), '%Y-%m-%d %H:%i:%s') AS due_time, DATE_FORMAT(CONVERT_TZ(created_at, '+00:00', '+00:00'), '%Y-%m-%d %H:%i:%s') AS created_at FROM todo WHERE id = ?", [id]);
 
         if (rows.length === 0)
             return res.status(404).json({ msg: 'Not found' });
-
         res.json(rows[0]);
     } catch (err) {
         console.error(err);

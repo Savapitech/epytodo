@@ -6,7 +6,7 @@ const auth = require('../middleware/auth');
 router.get('/', auth, async (req, res) => {
     try {
         const [rows] = await pool.query(
-            'SELECT id, email, password, created_at, firstname, name FROM user WHERE id = ?',
+            "SELECT id, email, password, DATE_FORMAT(CONVERT_TZ(created_at, '+00:00', '+00:00'), '%Y-%m-%d %H:%i:%s') AS created_at, firstname, name FROM user WHERE id = ?",
             [req.user.id]
         );
 
