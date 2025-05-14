@@ -66,7 +66,12 @@ router.delete('/', auth, async (req, res) => {
     const id = req.params.data
 
     try {
-        const [rows] = await pool.query(
+        let [rows] = await pool.query('SELECT * FROM user WHERE id = ?', [id]);
+
+        if (rows.length < 1)
+            return res.status(400).json({ msg: 'Not found' });
+
+        rows = await pool.query(
             'DELETE FROM user WHERE id = ?',
             [id]
         );
