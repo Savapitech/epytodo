@@ -50,7 +50,8 @@ router.post('/', auth, async (req, res) => {
             [title, description, due_time, user_id, status]
         );
 
-        const [created] = await pool.query('SELECT * FROM todo WHERE id = ?', [result.insertId]);
+
+        const [created] = await pool.query("SELECT *, DATE_FORMAT(CONVERT_TZ(due_time, '+00:00', '+00:00'), '%Y-%m-%d %H:%i:%s') AS due_time, DATE_FORMAT(CONVERT_TZ(created_at, '+00:00', '+00:00'), '%Y-%m-%d %H:%i:%s') AS created_at FROM todo WHERE id = ?", [result.insertId]);
         res.status(201).json(created[0]);
     } catch (err) {
         console.error(err);
@@ -81,7 +82,7 @@ router.put('/:id', auth, async (req, res) => {
             [title, description, due_time, user_id, status, id]
         );
 
-        const [updated] = await pool.query('SELECT * FROM todo WHERE id = ?', [id]);
+        const [updated] = await pool.query("SELECT *, DATE_FORMAT(CONVERT_TZ(due_time, '+00:00', '+00:00'), '%Y-%m-%d %H:%i:%s') AS due_time, DATE_FORMAT(CONVERT_TZ(created_at, '+00:00', '+00:00'), '%Y-%m-%d %H:%i:%s') AS created_at FROM todo WHERE id = ?", [id]);
         res.json(updated[0]);
     } catch (err) {
         console.error(err);
