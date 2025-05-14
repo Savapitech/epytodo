@@ -17,7 +17,7 @@ router.post('/register', async (req, res) => {
         const [rows] = await pool.query('SELECT * FROM user WHERE email = ?', [email]);
 
         if (rows.length > 0)
-            return res.status(400).json({ msg: 'Account already exists' });
+            return res.status(409).json({ msg: 'Account already exists' });
 
         const hashedPassword = await bcrypt.hash(password, 10);
         const [result] = await pool.query(
