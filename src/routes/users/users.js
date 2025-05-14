@@ -49,7 +49,7 @@ router.put('/', auth, async (req, res) => {
             return res.status(404).json({ msg: 'Not found' });
 
         rows = await pool.query(
-            "SELECT id, email, password, DATE_FORMAT(CONVERT_TZ(created_at, '+00:00', '+00:00'), '%Y-%m-%d %H:%i:%s') AS created_at, firstname, name FROM user WHERE id = ? OR email = ?",
+            "SELECT id, email, password, DATE_FORMAT(CONVERT_TZ(created_at, '+00:00', '+00:00'), '%Y-%m-%d %H:%i:%s') AS created_at, firstname, name FROM user WHERE id = ?",
             [id]
         );
 
