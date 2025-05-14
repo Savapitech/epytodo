@@ -35,7 +35,7 @@ CREATE TABLE `todo` (
   `id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` text NOT NULL,
-  `created_at` datetime DEFAULT current_timestamp(),
+  `created_at` datetime DEFAULT current_timestamp() NOT NULL,
   `due_time` datetime NOT NULL,
   `status` enum('not started','todo','in progress','done') DEFAULT 'not started',
   `user_id` int(11) NOT NULL
@@ -53,7 +53,7 @@ CREATE TABLE `user` (
   `password` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `firstname` varchar(255) NOT NULL,
-  `created_at` datetime DEFAULT current_timestamp()
+  `created_at` datetime DEFAULT current_timestamp() NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
